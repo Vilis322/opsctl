@@ -167,21 +167,51 @@ export default function App() {
   const [selected, setSelected] = useState('domctl');
   const [page, setPage] = useState<Page>('service');
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const service = services.find((s) => s.id === selected)!;
 
-  const selectService = (id: string) => { setSelected(id); setPage('service'); };
+  const selectService = (id: string) => { setSelected(id); setPage('service'); setMobileOpen(false); };
+  const selectEcosystem = () => { setPage('ecosystem'); setMobileOpen(false); };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Mobile hamburger */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-30 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center gap-3">
+        <button onClick={() => setMobileOpen(!mobileOpen)} className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+          <svg className="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {mobileOpen
+              ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />}
+          </svg>
+        </button>
+        <div className="w-6 h-6 rounded bg-gray-900 dark:bg-white flex items-center justify-center text-white dark:text-gray-900 text-xs font-bold">O</div>
+        <span className="font-bold text-gray-900 dark:text-white text-sm">OpsCtl</span>
+      </div>
+
+      {/* Mobile overlay */}
+      {mobileOpen && <div className="md:hidden fixed inset-0 z-20 bg-black/50" onClick={() => setMobileOpen(false)} />}
+
       {/* Sidebar */}
-      <aside className={`fixed left-0 top-0 h-full bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col transition-all duration-300 z-20 ${collapsed ? 'w-16' : 'w-60'}`}>
-        <button onClick={() => setCollapsed(!collapsed)} className="absolute right-2 top-4 z-10 w-7 h-7 flex items-center justify-center rounded-md border border-gray-200 bg-white shadow-sm hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600">
+      <aside className={`fixed left-0 top-0 h-full bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col transition-all duration-300 z-30
+        ${collapsed ? 'w-16' : 'w-60'}
+        ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
+        md:translate-x-0
+      `}>
+        {/* Desktop collapse button */}
+        <button onClick={() => setCollapsed(!collapsed)} className="hidden md:flex absolute right-2 top-4 z-10 w-7 h-7 items-center justify-center rounded-md border border-gray-200 bg-white shadow-sm hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600">
           <svg className={`w-3.5 h-3.5 text-gray-600 dark:text-gray-300 transition-transform duration-300 ${collapsed ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
 
-        <div className={`p-4 pt-5 ${collapsed ? 'opacity-0 pointer-events-none' : ''} transition-opacity duration-300`}>
+        {/* Mobile close */}
+        <button onClick={() => setMobileOpen(false)} className="md:hidden absolute right-2 top-4 z-10 w-7 h-7 flex items-center justify-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+          <svg className="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <div className={`p-4 pt-5 ${collapsed ? 'md:opacity-0 md:pointer-events-none' : ''} transition-opacity duration-300`}>
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-md bg-gray-900 dark:bg-white flex items-center justify-center text-white dark:text-gray-900 text-sm font-bold">O</div>
             <div><h1 className="text-base font-bold text-gray-900 dark:text-white leading-tight">OpsCtl</h1><p className="text-xs text-gray-400">opsctl.tech</p></div>
@@ -199,7 +229,7 @@ export default function App() {
           ))}
 
           {!collapsed && <div className="px-2 pt-4 py-1.5 text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Platform</div>}
-          <button onClick={() => setPage('ecosystem')} className={`w-full flex items-center gap-3 px-2 py-2 rounded-lg text-sm transition-colors ${page === 'ecosystem' ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'} ${collapsed ? 'justify-center' : ''}`}>
+          <button onClick={selectEcosystem} className={`w-full flex items-center gap-3 px-2 py-2 rounded-lg text-sm transition-colors ${page === 'ecosystem' ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'} ${collapsed ? 'justify-center' : ''}`}>
             <svg className={`w-5 h-5 flex-shrink-0 ${page === 'ecosystem' ? 'text-blue-600' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
             {!collapsed && <span className="font-medium">Ecosystem</span>}
           </button>
@@ -214,7 +244,7 @@ export default function App() {
       </aside>
 
       {/* Main */}
-      <main className="flex-1 transition-all duration-300" style={{ marginLeft: collapsed ? 64 : 240 }}>
+      <main className={`flex-1 transition-all duration-300 pt-14 md:pt-0 ml-0 ${collapsed ? 'md:ml-16' : 'md:ml-60'}`}>
         <div className="max-w-4xl mx-auto px-6 py-8">
           {page === 'ecosystem' ? (
             /* Ecosystem page */
@@ -277,7 +307,7 @@ export default function App() {
             /* Service detail page */
             <>
               {/* Header */}
-              <div className="flex items-start justify-between mb-8">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
                 <div className="flex items-center gap-4">
                   <ServiceIcon icon={service.icon} color={service.color} />
                   <div>
