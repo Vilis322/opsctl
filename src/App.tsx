@@ -1,11 +1,26 @@
 import { useState } from 'react';
 
-const services = [
+interface Service {
+  id: string;
+  name: string;
+  icon: string;
+  url: string;
+  docsUrl: string;
+  color: string;
+  tagline: string;
+  description: string;
+  features: string[];
+  stack: string;
+  planned?: boolean;
+}
+
+const services: Service[] = [
   {
     id: 'domctl',
     name: 'DomCtl',
     icon: 'D',
     url: 'https://domctl.opsctl.tech',
+    docsUrl: 'https://github.com/Vilis322/domctl-public',
     color: '#2563eb',
     tagline: 'Domain Lifecycle Management',
     description: 'Automated domain registration, DNS management, and infrastructure deployment. Integrates with Namecheap, Spaceship, and Cloudflare APIs to handle the full domain lifecycle — from AI-powered name generation to bulk purchasing and SSL provisioning.',
@@ -24,6 +39,7 @@ const services = [
     name: 'FinanceCRM',
     icon: 'F',
     url: 'https://financecrm.opsctl.tech',
+    docsUrl: 'https://github.com/Vilis322/financecrm-public',
     color: '#2563eb',
     tagline: 'Financial Operations CRM',
     description: 'Comprehensive financial management for advertising operations. Multi-wallet tracking, income/expense management with EAV categories, per-buyer ROI analytics, and real-time collaboration via WebSocket. Dynamic RBAC with 50+ permission nodes.',
@@ -42,6 +58,7 @@ const services = [
     name: 'WorkNest',
     icon: 'W',
     url: 'https://worknest.opsctl.tech',
+    docsUrl: 'https://github.com/Vilis322/worknest-public',
     color: '#2563eb',
     tagline: 'Task Management Platform',
     description: 'Kanban-based task management with department workflows, role-based access, and team collaboration. Drag-and-drop board with real-time updates, file attachments, comment threads, and rich text editor.',
@@ -60,6 +77,7 @@ const services = [
     name: 'LeadCtl',
     icon: 'L',
     url: 'https://leadctl.opsctl.tech',
+    docsUrl: 'https://github.com/Vilis322/leadctl-public',
     color: '#2563eb',
     tagline: 'Leads CRM for Affiliate Marketing',
     description: 'Specialized CRM for managing advertising leads at scale. Lead intake, buyer routing, deal lifecycle tracking, and financial correlation with the broader OpsCtl ecosystem.',
@@ -77,10 +95,11 @@ const services = [
     id: 'ai',
     name: 'AI Analytics',
     icon: 'A',
-    url: 'https://github.com/Vilis322/opsctl-public',
+    url: 'https://ai.opsctl.tech',
+    docsUrl: 'https://github.com/Vilis322/ai-opsctl',
     color: '#8b5cf6',
     tagline: 'ML/AI Analytics Platform',
-    description: 'Machine learning service for predictive analytics, lead scoring, and automated reporting. Processes data from all OpsCtl services to generate insights and predictions. Currently in development — runs locally on MacBook with Ollama.',
+    description: 'Machine learning service for predictive analytics, lead scoring, and automated reporting. Processes data from all OpsCtl services to generate insights and predictions. Currently in active development.',
     features: [
       'Lead scoring and quality prediction',
       'Financial anomaly detection',
@@ -101,14 +120,12 @@ const infrastructure = [
   { label: 'Automation', value: 'Ansible — server provisioning playbooks' },
   { label: 'Monitoring', value: 'Prometheus + Grafana + Loki (planned)' },
   { label: 'Event Bus', value: 'Apache Kafka (planned)' },
-  { label: 'Containers', value: 'Docker — bots, infra services' },
+  { label: 'Containers', value: 'Docker — bots, infrastructure services' },
   { label: 'Scale', value: '300+ servers, 1000+ domains, 600+ CF accounts' },
 ];
 
 function StatusDot({ planned }: { planned?: boolean }) {
-  return (
-    <span className={`inline-block w-2 h-2 rounded-full ${planned ? 'bg-amber-400' : 'bg-green-400'}`} />
-  );
+  return <span className={`inline-block w-2 h-2 rounded-full ${planned ? 'bg-amber-400' : 'bg-green-400'}`} />;
 }
 
 function ServiceIcon({ icon, color }: { icon: string; color: string }) {
@@ -116,6 +133,14 @@ function ServiceIcon({ icon, color }: { icon: string; color: string }) {
     <div className="w-8 h-8 rounded-md flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style={{ backgroundColor: color }}>
       {icon}
     </div>
+  );
+}
+
+function ExternalIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+    </svg>
   );
 }
 
@@ -146,10 +171,20 @@ export default function App() {
           {services.map((s) => (
             <button key={s.id} onClick={() => setSelected(s.id)} className={`w-full flex items-center gap-3 px-2 py-2 rounded-lg text-sm transition-colors ${selected === s.id ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'} ${collapsed ? 'justify-center' : ''}`}>
               <ServiceIcon icon={s.icon} color={selected === s.id ? s.color : '#9ca3af'} />
-              {!collapsed && <span className="font-medium truncate">{s.name}</span>}
+              {!collapsed && <span className="font-medium truncate flex-1 text-left">{s.name}</span>}
               {!collapsed && <StatusDot planned={s.planned} />}
             </button>
           ))}
+
+          {!collapsed && (
+            <>
+              <div className="px-2 pt-4 py-1.5 text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Links</div>
+              <a href="https://github.com/Vilis322/opsctl" target="_blank" rel="noopener" className="w-full flex items-center gap-3 px-2 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
+                <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                <span>Source Code</span>
+              </a>
+            </>
+          )}
         </nav>
       </aside>
 
@@ -164,15 +199,36 @@ export default function App() {
                 <div className="flex items-center gap-3">
                   <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{service.name}</h1>
                   <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${service.planned ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' : 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'}`}>
-                    {service.planned ? 'planned' : 'online'}
+                    {service.planned ? 'in development' : 'online'}
                   </span>
                 </div>
                 <p className="text-gray-500 dark:text-gray-400 mt-0.5">{service.tagline}</p>
               </div>
             </div>
-            <a href={service.url} target="_blank" rel="noopener" className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors flex items-center gap-2">
-              {service.planned ? 'View Docs' : 'Open'} <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-            </a>
+            <div className="flex items-center gap-2">
+              {/* Open button — disabled for planned services */}
+              {service.planned ? (
+                <div className="relative group">
+                  <button disabled className="px-4 py-2 text-sm font-medium text-gray-400 bg-gray-100 dark:bg-gray-700 dark:text-gray-500 rounded-lg cursor-not-allowed flex items-center gap-2">
+                    Open <ExternalIcon />
+                  </button>
+                  <div className="absolute right-0 top-full mt-2 hidden group-hover:block z-50">
+                    <div className="relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl shadow-lg px-4 py-3 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">
+                      <div className="absolute -top-2 right-4 w-4 h-4 bg-white dark:bg-gray-800 border-l border-t border-gray-200 dark:border-gray-600 transform rotate-45" />
+                      In development
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <a href={service.url} target="_blank" rel="noopener" className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors flex items-center gap-2">
+                  Open <ExternalIcon />
+                </a>
+              )}
+              {/* View Docs button */}
+              <a href={service.docsUrl} target="_blank" rel="noopener" className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2">
+                View Docs <ExternalIcon />
+              </a>
+            </div>
           </div>
 
           {/* Overview */}
@@ -218,7 +274,7 @@ export default function App() {
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Ecosystem</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {services.map((s) => (
-                <a key={s.id} href={s.url} target="_blank" rel="noopener" className="flex items-center gap-3 p-3 rounded-lg border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                <a key={s.id} href={s.planned ? s.docsUrl : s.url} target="_blank" rel="noopener" className="flex items-center gap-3 p-3 rounded-lg border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                   <ServiceIcon icon={s.icon} color={s.color} />
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium text-gray-900 dark:text-white">{s.name}</div>
