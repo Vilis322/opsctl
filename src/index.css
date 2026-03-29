@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+html, body, #root {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: #111827;
+}
+
+@media (prefers-color-scheme: light) {
+  html, body, #root {
+    background-color: #f9fafb;
+  }
+}
