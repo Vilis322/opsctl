@@ -83,7 +83,6 @@ Predictive analytics, lead scoring, and automated reporting. Processes data from
 | Automation | Ansible — server provisioning playbooks |
 | Monitoring | Prometheus + Grafana + Loki |
 | Containers | Docker — bots, monitoring stack |
-| Scale | 300+ servers, 1000+ domains, 600+ CF accounts |
 
 **Infrastructure repo:** [opsctl-infra](https://github.com/Vilis322/opsctl-infra) — Ansible playbooks, Docker monitoring stack, deployment scripts.
 
