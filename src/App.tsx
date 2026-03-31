@@ -248,9 +248,9 @@ export default function App() {
           {page === 'ecosystem' ? (
             /* Ecosystem page */
             <>
-              <div className="mb-8">
+              <div className="mb-8 text-center">
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Ecosystem</h1>
-                <p className="text-gray-500 dark:text-gray-400 mt-1">All services and live demo links</p>
+                <div className="mt-1 h-5" />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
