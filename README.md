@@ -1,73 +1,92 @@
-# React + TypeScript + Vite
+# OpsCtl
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Unified SaaS platform for business operations management — domain lifecycle, financial tracking, task management, and lead CRM under one roof.
 
-Currently, two official plugins are available:
+**Live:** [opsctl.tech](https://opsctl.tech)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Ecosystem
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### DomCtl — Domain Lifecycle Management
 
-## Expanding the ESLint configuration
+Automated domain registration, DNS management, and infrastructure deployment. Three registrar integrations (Namecheap, Spaceship, Dynadot) with AI-powered domain name generation, bulk purchasing with SSE streaming, and Cloudflare DNS automation.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| | |
+|---|---|
+| **Demo** | [domctl.opsctl.tech](https://domctl.opsctl.tech) |
+| **Docs** | [domctl-public](https://github.com/Vilis322/domctl-public) |
+| **Stack** | Express 4 · TypeScript · PostgreSQL · Redis · Claude API |
+| **Version** | v1.2.0 |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### FinanceCRM — Financial Operations CRM
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Multi-wallet financial tracking, income/expense management with EAV categories, per-buyer ROI analytics, and real-time collaboration via WebSocket. Dynamic RBAC with 50+ permission nodes and per-user overrides.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+| | |
+|---|---|
+| **Demo** | [financecrm.opsctl.tech](https://financecrm.opsctl.tech) |
+| **Docs** | [financecrm-public](https://github.com/Vilis322/financecrm-public) |
+| **Stack** | React 18 · Express 5 · Prisma 7 · PostgreSQL · Redis · Socket.io |
+| **Version** | v2.16.0 |
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### WorkNest — Task Management Platform
+
+Kanban-based task management with department workflows, role-based access, and team collaboration. Drag-and-drop board, file attachments, comment threads, rich text editor, and i18n (EN/RU/UA).
+
+| | |
+|---|---|
+| **Demo** | [worknest.opsctl.tech](https://worknest.opsctl.tech) |
+| **Docs** | [worknest-public](https://github.com/Vilis322/worknest-public) |
+| **Stack** | Next.js 14 · Express 5 · Prisma 6 · PostgreSQL · Redis |
+| **Version** | v1.0.0 |
+
+---
+
+### LeadCtl — Leads CRM for Affiliate Marketing
+
+Lead intake, buyer routing, deal lifecycle tracking, and campaign analytics. Separated from FinanceCRM as a standalone service with leads-focused UI and independent permission nodes.
+
+| | |
+|---|---|
+| **Demo** | [leadctl.opsctl.tech](https://leadctl.opsctl.tech) |
+| **Docs** | [leadctl-public](https://github.com/Vilis322/leadctl-public) |
+| **Stack** | React 18 · Express 5 · Prisma 7 · PostgreSQL · Redis · Socket.io |
+| **Version** | v1.0.0 |
+
+---
+
+### AI Analytics — ML/AI Platform
+
+Predictive analytics, lead scoring, and automated reporting. Processes data from all ecosystem services. Currently in active development.
+
+| | |
+|---|---|
+| **Status** | In Development |
+| **Docs** | [ai-opsctl](https://github.com/Vilis322/ai-opsctl) |
+| **Stack** | Python · FastAPI · Ollama · Llama · Claude API |
+
+---
+
+## Infrastructure
+
+| Component | Technology |
+|---|---|
+| CI/CD | GitHub Actions — per-service pipeline with health checks |
+| Process | PM2 — cluster mode (2 instances) for production |
+| Reverse Proxy | Nginx — per-subdomain routing |
+| DNS | Cloudflare — Flexible SSL |
+| Automation | Ansible — server provisioning playbooks |
+| Monitoring | Prometheus + Grafana + Loki |
+| Containers | Docker — bots, monitoring stack |
+| Scale | 300+ servers, 1000+ domains, 600+ CF accounts |
+
+**Infrastructure repo:** [opsctl-infra](https://github.com/Vilis322/opsctl-infra) — Ansible playbooks, Docker monitoring stack, deployment scripts.
+
+## Author
+
+**Kyrylo Pryiomyshev** — [GitHub](https://github.com/Vilis322)
