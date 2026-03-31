@@ -127,7 +127,6 @@ const infrastructure = [
   { label: 'Monitoring', value: 'Prometheus + Grafana + Loki (planned)' },
   { label: 'Event Bus', value: 'Apache Kafka (planned)' },
   { label: 'Containers', value: 'Docker — bots, infrastructure services' },
-  { label: 'Scale', value: '300+ servers, 1000+ domains, 600+ CF accounts' },
 ];
 
 const statusConfig: Record<Status, { label: string; dot: string; badge: string }> = {
