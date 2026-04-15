@@ -78,26 +78,6 @@ const services: Service[] = [
     status: 'online',
   },
   {
-    id: 'leadctl',
-    name: 'LeadCtl',
-    icon: 'L',
-    url: 'https://leadctl.opsctl.tech',
-    docsUrl: 'https://github.com/Vilis322/leadctl-public',
-    color: '#2563eb',
-    tagline: 'Leads CRM for Affiliate Marketing',
-    description: 'Specialized CRM for managing advertising leads at scale. Lead intake, buyer routing, deal lifecycle tracking, and financial correlation with the broader OpsCtl ecosystem.',
-    features: [
-      'Lead management with status tracking',
-      'Deal lifecycle (prospecting to closed)',
-      'Per-buyer lead routing and filtering',
-      'Campaign analytics and conversion tracking',
-      'Dynamic RBAC with permission nodes',
-      'Financial correlation with FinanceCRM',
-    ],
-    stack: 'React 18 · Express 5 · Prisma 7 · PostgreSQL · Redis · Socket.io',
-    status: 'online',
-  },
-  {
     id: 'ai',
     name: 'AI Analytics',
     icon: 'A',
@@ -164,7 +144,7 @@ type Page = 'service' | 'ecosystem';
 
 export default function App() {
   const [selected, setSelected] = useState('domctl');
-  const [page, setPage] = useState<Page>('service');
+  const [page, setPage] = useState<Page>('ecosystem');
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const service = services.find((s) => s.id === selected)!;
