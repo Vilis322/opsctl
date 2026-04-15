@@ -18,26 +18,6 @@ interface Service {
 
 const services: Service[] = [
   {
-    id: 'domctl',
-    name: 'DomCtl',
-    icon: 'D',
-    url: 'https://domctl.opsctl.tech',
-    docsUrl: 'https://github.com/Vilis322/domctl-public',
-    color: '#2563eb',
-    tagline: 'Domain Lifecycle Management',
-    description: 'Automated domain registration, DNS management, and infrastructure deployment. Integrates with Namecheap, Spaceship, and Cloudflare APIs to handle the full domain lifecycle — from AI-powered name generation to bulk purchasing and SSL provisioning.',
-    features: [
-      'AI domain name generation (Claude API, SSE streaming)',
-      'Multi-registrar support (Namecheap + Spaceship)',
-      'Bulk domain purchasing with rate limiting and concurrency control',
-      'Cloudflare DNS automation (zones, A records, DNSSEC)',
-      'One-click deployment: NS → CF zone → A record → SSL',
-      'Per-user encrypted credentials (AES-256)',
-    ],
-    stack: 'Express 4 · TypeScript · PostgreSQL · Redis · esbuild',
-    status: 'online',
-  },
-  {
     id: 'financecrm',
     name: 'FinanceCRM',
     icon: 'F',
@@ -75,6 +55,26 @@ const services: Service[] = [
       'Internationalization (EN/RU/UA)',
     ],
     stack: 'Next.js 14 · Express 5 · Prisma 6 · PostgreSQL · Redis',
+    status: 'online',
+  },
+  {
+    id: 'domctl',
+    name: 'DomCtl',
+    icon: 'D',
+    url: 'https://domctl.opsctl.tech',
+    docsUrl: 'https://github.com/Vilis322/domctl-public',
+    color: '#2563eb',
+    tagline: 'Domain Lifecycle Management',
+    description: 'Automated domain registration, DNS management, and infrastructure deployment. Integrates with Namecheap, Spaceship, and Cloudflare APIs to handle the full domain lifecycle — from AI-powered name generation to bulk purchasing and SSL provisioning.',
+    features: [
+      'AI domain name generation (Claude API, SSE streaming)',
+      'Multi-registrar support (Namecheap + Spaceship)',
+      'Bulk domain purchasing with rate limiting and concurrency control',
+      'Cloudflare DNS automation (zones, A records, DNSSEC)',
+      'One-click deployment: NS → CF zone → A record → SSL',
+      'Per-user encrypted credentials (AES-256)',
+    ],
+    stack: 'Express 4 · TypeScript · PostgreSQL · Redis · esbuild',
     status: 'online',
   },
   {
